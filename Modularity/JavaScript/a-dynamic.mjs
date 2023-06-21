@@ -1,4 +1,4 @@
-const promise = import('node:events'); // import works as a function
+const promise = import('node:events');
 console.log({ promise });
 
 promise.then((events) => {

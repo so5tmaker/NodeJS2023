@@ -2,7 +2,7 @@
 
 const fs = require('node:fs');
 const { readFile } = fs;
-// Example of how you can replace the functionality of the module
+
 fs.readFile = (...args) => {
   const path = args.shift();
   const callback = args.pop();

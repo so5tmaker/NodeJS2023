@@ -1,6 +1,6 @@
 'use strict';
 
-const promise = import('node:events'); // dynamic import in common js modules, await does not work here
+const promise = import('node:events');
 console.log({ promise });
 
 promise.then((events) => {
