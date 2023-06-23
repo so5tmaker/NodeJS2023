@@ -1,6 +1,6 @@
 'use strict';
 
-module.export = {
+module.exports = {
   static: {
     port: 8000,
   },
@@ -18,5 +18,4 @@ module.export = {
     user: 'marcus',
     password: 'marcus',
   },
-  logger: { date_time_length: 19 }
-}
+};
