@@ -21,7 +21,7 @@ const load = async (filePath, sandbox) => {
 };
 
 const main = async () => {
-  const sandbox = { Map: class PseudoMap {} };
+  const sandbox = { Map: class PseudoMap { } };
   const exported = await load('./1-export.js', sandbox);
   console.log(exported);
 };

@@ -15,7 +15,7 @@ const load = async (filePath, sandbox) => {
 };
 
 const main = async () => {
-  const sandbox = { Map: class PseudoMap {} };
+  const sandbox = { Map: class PseudoMap { } };
   const exported = await load('./h-example.mm', sandbox);
   console.log(exported);
 };
