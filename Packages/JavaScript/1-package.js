@@ -11,3 +11,5 @@ const j1 = require('./Package1/package');
 const j2 = require('./Package1/package.json');
 
 console.log({ p1, p2, p3, m1, m2, u1, u2, j1, j2 });
+
+// Modules: Packages - https://nodejs.org/api/packages.html

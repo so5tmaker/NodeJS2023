@@ -3,7 +3,7 @@
 const fs = require('node:fs').promises;
 const vm = require('node:vm');
 
-const RUN_OPTIONS = { timeout: 5000, displayErrors: false };
+const { RUN_OPTIONS } = require('./config.js');
 
 module.exports = async (filePath, sandbox) => {
   const src = await fs.readFile(filePath, 'utf8');

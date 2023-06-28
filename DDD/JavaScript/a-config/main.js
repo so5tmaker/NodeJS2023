@@ -9,6 +9,8 @@ const db = require('./db.js');
 const hash = require('./hash.js');
 const logger = require('./logger.js');
 
+const { static: { port: staticPort, }, api: { port: apiPort, }, } = require('./config.js');
+
 const sandbox = {
   console: Object.freeze(logger),
   db: Object.freeze(db),
@@ -26,6 +28,6 @@ const routing = {};
     routing[serviceName] = await load(filePath, sandbox);
   }
 
-  staticServer('./static', 8000);
-  server(routing, 8001);
+  staticServer('./static', staticPort);
+  server(routing, apiPort);
 })();

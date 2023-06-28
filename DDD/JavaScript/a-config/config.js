@@ -7,7 +7,7 @@ module.export = {
   api: {
     port: 8001,
   },
-  sandbox: {
+  RUN_OPTIONS: {
     timeout: 5000,
     displayErrors: false,
   },
@@ -18,5 +18,14 @@ module.export = {
     user: 'marcus',
     password: 'marcus',
   },
-  logger: { date_time_length: 19 }
+  logger: {
+    DATE_TIME_LENGTH: 19,
+    COLORS: {
+      info: '\x1b[1;37m',
+      debug: '\x1b[1;33m',
+      error: '\x1b[0;31m',
+      system: '\x1b[1;34m',
+      access: '\x1b[1;38m',
+    }
+  }
 }
