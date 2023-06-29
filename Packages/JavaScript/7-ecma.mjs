@@ -15,3 +15,5 @@ const c7 = require('Package7');
 const m7 = await import('Package7');
 
 console.log({ c7, m7 });
+
+// module.createRequire(filename) - https://nodejs.org/api/module.html#modulecreaterequirefilename

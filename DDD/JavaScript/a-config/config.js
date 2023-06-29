@@ -27,5 +27,6 @@ module.export = {
       system: '\x1b[1;34m',
       access: '\x1b[1;38m',
     }
-  }
+  },
+  transport: { http: 'http.js', ws: 'ws.js' }
 }
