@@ -4,7 +4,15 @@ const fs = require('node:fs');
 const util = require('node:util');
 const path = require('node:path');
 
-const { logger: { DATE_TIME_LENGTH, COLORS } } = require('./config.js')
+const COLORS = {
+  info: '\x1b[1;37m',
+  debug: '\x1b[1;33m',
+  error: '\x1b[0;31m',
+  system: '\x1b[1;34m',
+  access: '\x1b[1;38m',
+};
+
+const DATETIME_LENGTH = 19;
 
 class Logger {
   constructor(logPath) {
@@ -21,7 +29,7 @@ class Logger {
 
   write(type = 'info', s) {
     const now = new Date().toISOString();
-    const date = now.substring(0, DATE_TIME_LENGTH);
+    const date = now.substring(0, DATETIME_LENGTH);
     const color = COLORS[type];
     const line = date + '\t' + s;
     console.log(color + line + '\x1b[0m');
@@ -45,6 +53,7 @@ class Logger {
   }
 
   error(...args) {
+    console.log(args);
     const msg = util.format(...args).replace(/[\n\r]{2,}/g, '\n');
     this.write('error', msg.replace(this.regexp, ''));
   }
