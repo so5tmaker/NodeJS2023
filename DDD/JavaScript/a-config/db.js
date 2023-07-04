@@ -3,8 +3,9 @@
 const pg = require('pg');
 
 const crud = (pool) => (table) => ({
-  query(sql, args) {
-    return pool.query(sql, args);
+  async query(sql, args) {
+    result = await pool.query(sql, args);
+    return result.rows;
   },
 
   read(id, fields = ['*']) {
