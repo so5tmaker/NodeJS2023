@@ -2,11 +2,11 @@
 
 const fsp = require('node:fs').promises;
 const path = require('node:path');
-const server = require('./ws.js');
 const staticServer = require('./static.js');
 const logger = require('./logger.js');
 const hash = require('./hash.js');
 const config = require('./config.js');
+const server = require(`./${config.api.transport}.js`);
 const load = require('./load.js')(config.sandbox);
 const db = require('./db.js')(config.db);
 
