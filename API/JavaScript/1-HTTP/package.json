@@ -1,11 +1,11 @@
 {
-  "name": "ws-api",
+  "name": "http-api",
   "version": "3.0.0",
   "author": "Timur Shemsedinov <timur.shemsedinov@gmail.com>",
-  "description": "WS API Example",
+  "description": "HTTP API Example",
   "license": "MIT",
   "scripts": {
-    "start":"node server.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "ws": "^8.11.0"
