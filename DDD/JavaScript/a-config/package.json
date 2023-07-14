@@ -5,6 +5,9 @@
   "license": "MIT",
   "private": true,
   "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
   "engines": {
     "node": "14 || 16 || 18"
   },
