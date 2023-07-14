@@ -13,12 +13,10 @@ transport.http = (url) => (structure) => {
     const methods = Object.keys(service);
     for (const method of methods) {
       api[name][method] = (...args) => new Promise((resolve, reject) => {
-        // const url = `/api/${method}`;
-        console.log(url, args);
-        fetch(url, {
+        fetch(`${url}/api/${name}/${method}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(args),
+          body: JSON.stringify({ args }),
         }).then((res) => {
           const { status } = res;
           if (status !== 200) {
@@ -30,11 +28,11 @@ transport.http = (url) => (structure) => {
       });
     }
   }
-  return api;
+  return Promise.resolve(api);
 };
 
 transport.ws = (url) => (structure) => {
-  const socket = new WebSocket(url); // 'ws://127.0.0.1:8001/'
+  const socket = new WebSocket(url);
   const api = {};
   const services = Object.keys(structure);
   for (const name of services) {
@@ -52,25 +50,34 @@ transport.ws = (url) => (structure) => {
       });
     }
   }
-  return api;
+  return new Promise((resolve) => {
+    socket.addEventListener('open', () => resolve(api));
+  });
 };
 
-const api = scaffold({
-  user: {
-    create: ['record'],
-    read: ['id'],
-    update: ['id', 'record'],
-    delete: ['id'],
-    find: ['mask'],
-  },
-  country: {
-    read: ['id'],
-    delete: ['id'],
-    find: ['mask'],
-  },
-});
+const scaffold = (url) => {
+  const protocol = url.startsWith('ws:') ? 'ws' : 'http';
+  return transport[protocol](url);
+};
 
-socket.addEventListener('open', async () => {
-  const data = await api.user.read(3);
+(async () => {
+  const api = await scaffold('http://localhost:8001')({
+    user: {
+      create: ['record'],
+      read: ['id'],
+      update: ['id', 'record'],
+      delete: ['id'],
+      find: ['mask'],
+    },
+    country: {
+      read: ['id'],
+      delete: ['id'],
+      find: ['mask'],
+    },
+    talks: {
+      say: ['message'],
+    }
+  });
+  const data = await api.talks.say('hello');
   console.dir({ data });
-});
+})();
