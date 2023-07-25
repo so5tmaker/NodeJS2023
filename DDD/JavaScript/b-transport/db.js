@@ -4,7 +4,7 @@ const pg = require('pg');
 
 const crud = (pool) => (table) => ({
   async query(sql, args) {
-    result = await pool.query(sql, args);
+    const result = await pool.query(sql, args);
     return result.rows;
   },
 
@@ -12,7 +12,7 @@ const crud = (pool) => (table) => ({
     const names = fields.join(', ');
     const sql = `SELECT ${names} FROM ${table}`;
     if (!id) return pool.query(sql);
-    return pool.query(`${sql} WHERE id = $1`, [id]);
+    return pool.query(`${sql} WHERE id = $1`, [parseInt(id)]);
   },
 
   async create({ ...record }) {
@@ -47,7 +47,7 @@ const crud = (pool) => (table) => ({
 
   delete(id) {
     const sql = `DELETE FROM ${table} WHERE id = $1`;
-    return pool.query(sql, [id]);
+    return pool.query(sql, [parseInt(id)]);
   },
 });
 

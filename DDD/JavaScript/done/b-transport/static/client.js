@@ -74,4 +74,6 @@ const scaffold = (url) => {
   });
   const data = await api.talks.say('hello');
   console.dir({ data });
+  const countries = await api.user.read('3');
+  console.dir({ countries });
 })();
