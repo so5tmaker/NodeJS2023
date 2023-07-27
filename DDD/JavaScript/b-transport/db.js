@@ -8,11 +8,12 @@ const crud = (pool) => (table) => ({
     return result.rows;
   },
 
-  read(id, fields = ['*']) {
+  async read(id, fields = ['*']) {
     const names = fields.join(', ');
     const sql = `SELECT ${names} FROM ${table}`;
     if (!id) return pool.query(sql);
-    return pool.query(`${sql} WHERE id = $1`, [parseInt(id)]);
+    const result = await pool.query(`${sql} WHERE id = $1`, [parseInt(id)]);
+    return result.rows;
   },
 
   async create({ ...record }) {
