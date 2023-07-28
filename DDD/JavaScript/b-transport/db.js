@@ -12,7 +12,7 @@ const crud = (pool) => (table) => ({
     const names = fields.join(', ');
     const sql = `SELECT ${names} FROM ${table}`;
     if (!id) return pool.query(sql);
-    const result = await pool.query(`${sql} WHERE id = $1`, [parseInt(id)]);
+    const result = await pool.query(`${sql} WHERE id = $1`, [id]);
     return result.rows;
   },
 
@@ -48,7 +48,7 @@ const crud = (pool) => (table) => ({
 
   delete(id) {
     const sql = `DELETE FROM ${table} WHERE id = $1`;
-    return pool.query(sql, [parseInt(id)]);
+    return pool.query(sql, [id]);
   },
 });
 

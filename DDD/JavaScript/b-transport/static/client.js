@@ -61,7 +61,8 @@ const scaffold = (url) => {
 };
 
 (async () => {
-  const api = await scaffold('ws://127.0.0.1:8001/')({ // 'ws://127.0.0.1:8001/' 'http://localhost:8001'
+  // const api = await scaffold('ws://127.0.0.1:8001/')({
+  const api = await scaffold('http://localhost:8001')({
     user: {
       create: ['record'],
       read: ['id'],
@@ -78,8 +79,10 @@ const scaffold = (url) => {
       say: ['message'],
     }
   });
-  // const data = await api.talks.say('hello');
-  // console.dir({ data });
-  const countries = await api.country.read('3');
+  const data = await api.talks.say('hello');
+  console.dir({ data });
+  let countries = await api.country.read('3');
+  console.dir({ countries });
+  countries = await api.country.find('%a%');
   console.dir({ countries });
 })();

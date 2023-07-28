@@ -2,7 +2,7 @@ const country = db('country');
 
 ({
   read(id) {
-    // console.log({ db });
+    console.log({ db });
     return country.read(id);
   },
 

@@ -19,7 +19,7 @@ const receiveArgs = async (req) => {
   return JSON.parse(data);
 };
 
-module.exports = (routing, port) => {
+module.exports = (routing, port, console) => {
   http.createServer(async (req, res) => {
     res.writeHead(200, HEADERS);
     if (req.method !== 'POST') return res.end('"Not found"');
@@ -32,7 +32,7 @@ module.exports = (routing, port) => {
     if (!handler) return res.end('"Not found"');
     const { args } = await receiveArgs(req);
     console.log(`${socket.remoteAddress} ${method} ${url}`);
-    const result = await handler(args);
+    const result = await handler(...args);
     res.end(JSON.stringify(result));
   }).listen(port);
 
