@@ -6,7 +6,8 @@ module.exports = {
   },
   api: {
     port: 8001,
-    transport: 'http' //ws
+    transport: 'http', //ws
+    logger: 'pino', // 'logger'
   },
   sandbox: {
     timeout: 5000,
