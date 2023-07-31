@@ -10,6 +10,8 @@ class Logger {
     const filePath = path.join(logPath, `${date}.log`);
     const customLevels = {
       info: 20,
+      assert: 35,
+      trace: 45
     };
     const loggerOptions = {
       customLevels,
@@ -36,6 +38,10 @@ class Logger {
     this.write('info', ...args);
   }
 
+  assert(...args) {
+    this.write('assert', ...args);
+  }
+
   dir(...args) {
     this.write('info', ...args);
   }
@@ -45,16 +51,19 @@ class Logger {
   }
 
   error(...args) {
-    console.log(args);
     this.write('error', ...args);
   }
 
   system(...args) {
-    this.write('system', ...args);
+    this.write('trace', ...args);
   }
 
-  access(...args) {
-    this.write('access', ...args);
+  warn(...args) {
+    this.write('warn', ...args);
+  }
+
+  trace(...args) {
+    this.write('trace', ...args);
   }
 }
 
