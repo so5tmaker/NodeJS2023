@@ -1,71 +1,69 @@
 'use strict';
 
-const fs = require('node:fs');
-const util = require('node:util');
 const path = require('node:path');
 
-const COLORS = {
-  info: '\x1b[1;37m',
-  debug: '\x1b[1;33m',
-  error: '\x1b[0;31m',
-  system: '\x1b[1;34m',
-  access: '\x1b[1;38m',
-};
-
-const DATETIME_LENGTH = 19;
+const pino = require('pino');
 
 class Logger {
   constructor(logPath) {
-    this.path = logPath;
     const date = new Date().toISOString().substring(0, 10);
     const filePath = path.join(logPath, `${date}.log`);
-    this.stream = fs.createWriteStream(filePath, { flags: 'a' });
-    this.regexp = new RegExp(path.dirname(this.path), 'g');
-  }
-
-  close() {
-    return new Promise((resolve) => this.stream.end(resolve));
+    const customLevels = {
+      info: 20,
+      assert: 35,
+      trace: 45
+    };
+    const loggerOptions = {
+      customLevels,
+      level: 'info',
+      transport: {
+        target: 'pino-pretty',
+        options: {
+          colorize: true,
+          translateTime: true,
+        },
+      },
+      dest: filePath, // omit for stdout
+      minLength: 4096, // Buffer before writing
+      sync: false // Asynchronous logging
+    };
+    this.pino = pino(loggerOptions);
   }
 
   write(type = 'info', s) {
-    const now = new Date().toISOString();
-    const date = now.substring(0, DATETIME_LENGTH);
-    const color = COLORS[type];
-    const line = date + '\t' + s;
-    console.log(color + line + '\x1b[0m');
-    const out = line.replace(/[\n\r]\s*/g, '; ') + '\n';
-    this.stream.write(out);
+    this.pino[type](s);
   }
 
   log(...args) {
-    const msg = util.format(...args);
-    this.write('info', msg);
+    this.write('info', ...args);
+  }
+
+  assert(...args) {
+    this.write('assert', ...args);
   }
 
   dir(...args) {
-    const msg = util.inspect(...args);
-    this.write('info', msg);
+    this.write('info', ...args);
   }
 
   debug(...args) {
-    const msg = util.format(...args);
-    this.write('debug', msg);
+    this.write('debug', ...args);
   }
 
   error(...args) {
-    console.log(args);
-    const msg = util.format(...args).replace(/[\n\r]{2,}/g, '\n');
-    this.write('error', msg.replace(this.regexp, ''));
+    this.write('error', ...args);
   }
 
   system(...args) {
-    const msg = util.format(...args);
-    this.write('system', msg);
+    this.write('trace', ...args);
   }
 
-  access(...args) {
-    const msg = util.format(...args);
-    this.write('access', msg);
+  warn(...args) {
+    this.write('warn', ...args);
+  }
+
+  trace(...args) {
+    this.write('trace', ...args);
   }
 }
 
