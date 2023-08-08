@@ -11,7 +11,7 @@ class Logger {
     const customLevels = {
       info: 20,
       assert: 35,
-      trace: 45
+      trace: 45,
     };
     const loggerOptions = {
       customLevels,
@@ -25,7 +25,7 @@ class Logger {
       },
       dest: filePath, // omit for stdout
       minLength: 4096, // Buffer before writing
-      sync: false // Asynchronous logging
+      sync: false, // Asynchronous logging
     };
     this.pino = pino(loggerOptions);
   }
