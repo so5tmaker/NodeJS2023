@@ -13,19 +13,15 @@
     "start:dev": "nodemon --exec ts-node --files -r tsconfig-paths/register ./src/server.ts",
     "postinstall": "prisma generate",
     "prestart": "npm run migrate:prod && npm run seed:soft",
-    "start": "node ./build/server.js",
+    "start": "node ./build/main.js",
     "build:ts": "tsc && tsc-alias -p tsconfig.json",
     "build": "npm run build:ts"
   },
   "keywords": [],
   "author": "Viktor Sivulskiy",
   "license": "ISC",
-  "dependencies": {
-
-  },
-  "devDependencies": {
-    
-  },
+  "dependencies": {},
+  "devDependencies": {},
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
   }
