@@ -28,6 +28,6 @@ const routing = {};
     routing[serviceName] = await load(filePath, sandbox);
   }
 
-  staticServer('./frontend', config.static.port, logger);
+  staticServer('./static', config.static.port, logger);
   transport(routing, config.api.port, logger);
 })();
